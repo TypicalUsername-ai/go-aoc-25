@@ -35,10 +35,8 @@ func (d day1) GetInput() AocChallenge {
 }
 
 func (d day1) Challenge() string {
-	dialPosition := 0
+	dialPosition := 50
 	ticker := 0
-
-	fmt.Println(d.data)
 
 	for _, dir := range d.data {
 		num, err := strconv.Atoi(dir[1:])
@@ -50,7 +48,6 @@ func (d day1) Challenge() string {
 		} else {
 			dialPosition += num
 		}
-		fmt.Printf("[AoC 1] %v\n", dialPosition)
 		if dialPosition%100 == 0 {
 			ticker += 1
 		}
