@@ -1,1 +1,3 @@
 /gomod2nix-template
+inputs/
+go-aoc-25
