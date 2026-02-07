@@ -2,26 +2,22 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 )
 
-type day1 struct {
-	data []string
-}
+type Task1 struct{}
 
-func (d day1) GetInput() AocChallenge {
-	fmt.Println("[AoC day1] Paste your input")
-	inputReader := bufio.NewReader(os.Stdin)
+func (t *Task1) Execute(input *bufio.Reader, output *bufio.Writer) (int, error) {
 
+	//reading directions
 	var dialDirections []string
 	for {
-		line, err := inputReader.ReadString('\n')
+		line, err := input.ReadString('\n')
 		if err != nil {
 			log.Fatal(err)
+			return -1, err
 		}
 		data := strings.TrimSpace(line)
 		if len(data) == 0 {
@@ -29,19 +25,15 @@ func (d day1) GetInput() AocChallenge {
 		}
 		dialDirections = append(dialDirections, data)
 	}
-
-	d.data = dialDirections
-	return d
-}
-
-func (d day1) Challenge() string {
+	// parsing directions
 	dialPosition := 50
 	ticker := 0
 
-	for _, dir := range d.data {
+	for _, dir := range dialDirections {
 		num, err := strconv.Atoi(dir[1:])
 		if err != nil {
 			log.Fatal(err)
+			return -1, err
 		}
 		if dir[0] == 'L' {
 			dialPosition -= num
@@ -53,6 +45,8 @@ func (d day1) Challenge() string {
 		}
 
 	}
-	fmt.Printf("[AoC] %v\n", ticker)
-	return strconv.FormatInt(int64(ticker), 10)
+	output.WriteString(strconv.FormatInt(int64(ticker), 10))
+
+	return 1, nil
+
 }
